@@ -1,3 +1,4 @@
 rootProject.name = 'ServiceManagement'
 include 'Auth-service'
+include 'Company-service'
 

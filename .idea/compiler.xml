@@ -10,6 +10,7 @@
         </processorPath>
         <module name="ServiceManagement.main" />
         <module name="ServiceManagement.Auth-service.main" />
+        <module name="ServiceManagement.Company-service.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />
