@@ -23,8 +23,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleRuntimeException(RuntimeException ex){
         return ResponseEntity.ok("Beklenmeyen bir hata olustu: "+ex.getMessage());
     }
-    @ExceptionHandler(CompanyServiceException.class)
-    public ResponseEntity<ErrorMessage> handleManagerException(CompanyServiceException ex){
+    @ExceptionHandler(EmployeeServiceException.class)
+    public ResponseEntity<ErrorMessage> handleManagerException(EmployeeServiceException ex){
         ErrorType errorType=ex.getErrorType();
         HttpStatus httpStatus=errorType.httpStatus;
         return new ResponseEntity<>(createError(errorType,ex),httpStatus);

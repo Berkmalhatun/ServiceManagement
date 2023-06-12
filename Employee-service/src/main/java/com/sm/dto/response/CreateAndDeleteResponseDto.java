@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CreateResponseDto {
+public class CreateAndDeleteResponseDto {
     private String name;
     private String surname;
     private String message;
