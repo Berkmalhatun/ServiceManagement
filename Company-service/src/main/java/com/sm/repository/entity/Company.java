@@ -27,6 +27,4 @@ public class Company extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EStatus eStatus=EStatus.ACTIVE;
-
-
 }
