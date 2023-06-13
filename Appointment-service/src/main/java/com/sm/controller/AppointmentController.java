@@ -24,9 +24,14 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.updateAppointment(dto));
 }
     @PutMapping(UPDATEACTIVE)
-    public ResponseEntity<String> updateAppointmentStatus(@RequestBody Long id){
-        return ResponseEntity.ok(appointmentService.updateAppointmentStatus(id));
+    public ResponseEntity<String> updateActiveAppointmentStatus(@RequestBody Long id){
+        return ResponseEntity.ok(appointmentService.updateActiveAppointmentStatus(id));
     }
+    @PutMapping(UPDATEPASSIVE)
+    public ResponseEntity<String> updatePassiveAppointmentStatus(@RequestBody Long id){
+        return ResponseEntity.ok(appointmentService.updatePassiveAppointmentStatus(id));
+    }
+
     @DeleteMapping(DELETE)
     public ResponseEntity<String> deleteAppointmentStatus(@RequestBody Long id){
         return ResponseEntity.ok(appointmentService.deleteAppointmentStatus(id));
@@ -34,5 +39,17 @@ public class AppointmentController {
     @GetMapping(FINDALL)
     public ResponseEntity<List<Appointment>> findAll(){
     return ResponseEntity.ok(appointmentService.findAll());
+    }
+    @GetMapping(FINDALLACTIVE)
+    public ResponseEntity<List<Appointment>> findActiveList(){
+        return ResponseEntity.ok(appointmentService.findActiveList());
+    }
+    @GetMapping(FINDALLPASSIVE)
+    public ResponseEntity<List<Appointment>> findPassiveList(){
+        return ResponseEntity.ok(appointmentService.findPassiveList());
+    }
+    @GetMapping(FINDALLDELETE)
+    public ResponseEntity<List<Appointment>> findDeletedList(){
+        return ResponseEntity.ok(appointmentService.findDeletedList());
     }
 }

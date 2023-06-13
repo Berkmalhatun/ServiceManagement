@@ -12,7 +12,9 @@ import com.sm.repository.enums.EStatus;
 import com.sm.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AppointmentService extends ServiceManager<Appointment,Long> {
@@ -54,14 +56,29 @@ public class AppointmentService extends ServiceManager<Appointment,Long> {
      * @param id
      * @return
      */
-    public String updateAppointmentStatus(Long id) {
+    public String updateActiveAppointmentStatus(Long id) {
         Optional<Appointment> appointment = appointmentRepository.findById(id);
         if (!appointment.isPresent()) {
             throw new AppointmentServiceException(ErrorType.APPOINTMENT_NOT_FOUND);
         }
         appointment.get().setStatus(EStatus.ACTIVE);
         update(appointment.get());
-        return "Successfully activated";
+        return "Successfully activated.";
+    }
+
+    /**
+     * Burada randevu taleplerını pasif yaparız.
+     * @param id
+     * @return
+     */
+    public String updatePassiveAppointmentStatus(Long id) {
+        Optional<Appointment> appointment = appointmentRepository.findById(id);
+        if (!appointment.isPresent()) {
+            throw new AppointmentServiceException(ErrorType.APPOINTMENT_NOT_FOUND);
+        }
+        appointment.get().setStatus(EStatus.PASSIVE);
+        update(appointment.get());
+        return "Successfully deactivated.";
     }
 
     /**
@@ -79,4 +96,57 @@ public class AppointmentService extends ServiceManager<Appointment,Long> {
         return "Successfully deleted.";
         //
     }
+
+    /**
+     * Deleted listesi buradan cekılır
+     * @return
+     */
+    public List<Appointment> findDeletedList(){
+        List<Appointment> appointmentsList = appointmentRepository.findAll();
+        if (appointmentsList.isEmpty()) {
+            throw new AppointmentServiceException(ErrorType.APPOINTMENT_NOT_FOUND);
+        }
+        List<Appointment> deleteAppointmentsList = appointmentsList.stream().filter(x->x.getStatus() == EStatus.DELETED)
+                .collect(Collectors.toList());
+        if (deleteAppointmentsList.isEmpty()) {
+            throw new AppointmentServiceException(ErrorType.APPOINTMENT_DELETED_NOT_FOUND);
+        }
+        return deleteAppointmentsList;
+    }
+
+    /**
+     * Active listesi buradan cekılır
+     * @return
+     */
+    public List<Appointment> findActiveList(){
+        List<Appointment> appointmentsList = appointmentRepository.findAll();
+        if (appointmentsList.isEmpty()) {
+            throw new AppointmentServiceException(ErrorType.APPOINTMENT_NOT_FOUND);
+        }
+        List<Appointment> activeAppointmentsList = appointmentsList.stream().filter(x->x.getStatus() == EStatus.ACTIVE)
+                .collect(Collectors.toList());
+        if (activeAppointmentsList.isEmpty()) {
+            throw new AppointmentServiceException(ErrorType.APPOINTMENT_ACTIVE_NOT_FOUND);
+        }
+        return activeAppointmentsList;
+    }
+
+    /**
+     * Passive Listesi buradan cekılır
+     * @return
+     */
+    public List<Appointment> findPassiveList(){
+        List<Appointment> appointmentsList = appointmentRepository.findAll();
+        if (appointmentsList.isEmpty()) {
+            throw new AppointmentServiceException(ErrorType.APPOINTMENT_NOT_FOUND);
+        }
+        List<Appointment> passiveAppointmentsList = appointmentsList.stream().filter(x->x.getStatus() == EStatus.PASSIVE)
+                .collect(Collectors.toList());
+        if (passiveAppointmentsList.isEmpty()) {
+            throw new AppointmentServiceException(ErrorType.APPOINTMENT_PASSIVE_NOT_FOUND);
+        }
+        return passiveAppointmentsList;
+    }
+
+
 }
