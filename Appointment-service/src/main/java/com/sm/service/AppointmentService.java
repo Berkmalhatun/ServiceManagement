@@ -77,5 +77,6 @@ public class AppointmentService extends ServiceManager<Appointment,Long> {
         appointment.get().setStatus(EStatus.DELETED);
         update(appointment.get());
         return "Successfully deleted.";
+        //
     }
 }
