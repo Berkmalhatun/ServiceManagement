@@ -19,7 +19,7 @@ public class AppointmentRequest extends BaseEntity{
     private Long id;
     private Long companyId;
     private String message;
+    @Enumerated(EnumType.STRING)
     @Builder.Default
-    @Enumerated
     private EStatus status=EStatus.ACTIVE;
 }

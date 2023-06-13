@@ -4,10 +4,14 @@ import static com.sm.constants.ApiUrls.*;
 
 import com.sm.dto.request.CreateAppointmentRequestDto;
 import com.sm.dto.request.UpdateAppointmentRequestDto;
+import com.sm.repository.entity.AppointmentRequest;
+import com.sm.repository.entity.Company;
 import com.sm.service.AppointmentRequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -27,5 +31,9 @@ public class AppointmentRequestController {
     @DeleteMapping(DELETE)
     public ResponseEntity<String> deleteAppointmentRequest(@RequestParam Long id){
         return ResponseEntity.ok(appointmentRequestService.deleteAppointmentRequest(id));
+    }
+    @GetMapping(FINDALL)
+    public ResponseEntity<List<AppointmentRequest>> findAll() {
+        return ResponseEntity.ok(appointmentRequestService.findAll());
     }
 }

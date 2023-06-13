@@ -2,11 +2,11 @@ package com.sm.service;
 
 import com.sm.dto.request.CreateAppointmentRequestDto;
 import com.sm.dto.request.UpdateAppointmentRequestDto;
-import com.sm.dto.request.UpdateRequestDto;
-import com.sm.dto.response.CreateAppointmentRequestResponse;
 import com.sm.exception.AppointmentRequestServiceException;
 import com.sm.exception.ErrorType;
 import com.sm.mapper.IAppointmentRequestMapper;
+import com.sm.rabbitmq.model.AppointmentRequestModel;
+import com.sm.rabbitmq.producer.AppointmentRequestProducer;
 import com.sm.repository.IAppointmentRequestRepository;
 import com.sm.repository.ICompanyRepository;
 import com.sm.repository.entity.AppointmentRequest;
@@ -22,10 +22,13 @@ public class AppointmentRequestService extends ServiceManager<AppointmentRequest
     private final IAppointmentRequestRepository appointmentRequestRepository;
     private final ICompanyRepository companyRepository;
 
-    public AppointmentRequestService(IAppointmentRequestRepository appointmentRequestRepository, ICompanyRepository companyRepository) {
+    private final AppointmentRequestProducer appointmentRequestProducer;
+
+    public AppointmentRequestService(IAppointmentRequestRepository appointmentRequestRepository, ICompanyRepository companyRepository, AppointmentRequestProducer appointmentRequestProducer) {
         super(appointmentRequestRepository);
         this.appointmentRequestRepository = appointmentRequestRepository;
         this.companyRepository = companyRepository;
+        this.appointmentRequestProducer = appointmentRequestProducer;
     }
 
     /**
@@ -40,6 +43,8 @@ public class AppointmentRequestService extends ServiceManager<AppointmentRequest
         }
         AppointmentRequest appointmentRequest = IAppointmentRequestMapper.INSTANCE.toAppointmentRequest(dto);
         save(appointmentRequest);
+        appointmentRequestProducer.sendNewAppointmentRequest(AppointmentRequestModel.builder()
+                .id(appointmentRequest.getId()).message(appointmentRequest.getMessage()).build());
         return "Appointment request successful.";
     }
 
