@@ -19,10 +19,11 @@ public class Auth extends BaseEntity{
     private Long id;
     private String email;
     private String password;
+    private String activationCode;
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private ERole role=ERole.ENGINEER;
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private EStatus status= EStatus.ACTIVE;
+    private EStatus status= EStatus.PENDING;
 }

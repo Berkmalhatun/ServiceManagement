@@ -1,0 +1,23 @@
+server:
+  port: 7074
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: root
+  mail:
+    username: ${hrmmailusername}
+    password: ${hrmmailpassword}
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+rabbitmq:
+  mailQueue: mailqueue

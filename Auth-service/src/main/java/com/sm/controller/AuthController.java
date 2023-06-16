@@ -17,11 +17,15 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(REGISTER)
- public ResponseEntity<RegisterResponseDto> register(@RequestBody RegisterRequestDto dto){
+        public ResponseEntity<RegisterResponseDto> register(@RequestBody RegisterRequestDto dto){
      return ResponseEntity.ok(authService.register(dto));
  }
- @GetMapping(LOGIN)
- public ResponseEntity<String> login(LoginRequestDto dto){
+         @GetMapping(LOGIN)
+        public ResponseEntity<String> login(LoginRequestDto dto){
         return ResponseEntity.ok(authService.login(dto));
+ }
+@PostMapping(ACTIVE)
+ public ResponseEntity<String> activet(Long id,String activationCode){
+        return ResponseEntity.ok(authService.actived(id,activationCode));
  }
 }

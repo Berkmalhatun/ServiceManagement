@@ -11,6 +11,7 @@
         <module name="ServiceManagement.Appointment-service.main" />
         <module name="ServiceManagement.Auth-service.main" />
         <module name="ServiceManagement.Employee-service.main" />
+        <module name="ServiceManagement.Mail-service.main" />
         <module name="ServiceManagement.main" />
         <module name="ServiceManagement.Company-service.main" />
       </profile>
