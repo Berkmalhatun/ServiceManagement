@@ -12,8 +12,10 @@ import com.sm.repository.IAuthRepository;
 import com.sm.repository.entity.Auth;
 import com.sm.repository.enums.EStatus;
 import com.sm.utility.CodeGenerator;
+import com.sm.utility.JwtTokenManager;
 import com.sm.utility.ServiceManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -21,13 +23,15 @@ import java.util.Optional;
 public class AuthService extends ServiceManager<Auth,Long> {
      private final IAuthRepository authRepository;
      private final MailProducer mailProducer;
+     private final JwtTokenManager jwtTokenManager;
 
-    public AuthService(IAuthRepository authRepository, MailProducer mailProducer) {
+    public AuthService(IAuthRepository authRepository, MailProducer mailProducer, JwtTokenManager jwtTokenManager) {
         super(authRepository);
         this.authRepository = authRepository;
         this.mailProducer = mailProducer;
+        this.jwtTokenManager = jwtTokenManager;
     }
-
+@Transactional
     public RegisterResponseDto register(RegisterRequestDto dto) {
         if (authRepository.findOptionalByEmail(dto.getEmail()).isPresent())
             throw new AuthServiceException(ErrorType.EMAIL_DUPLICATE);
@@ -47,7 +51,10 @@ public class AuthService extends ServiceManager<Auth,Long> {
         Optional<Auth> auth = authRepository.findOptionalByEmail(dto.getEmail());
         if(!auth.get().getPassword().equals(dto.getPassword()))
             throw new AuthServiceException(ErrorType.LOGIN_ERROR);
-        return "Login successful. You are being redirected to the page.";
+      //  return "Login successful. You are being redirected to the page.";
+        return jwtTokenManager.createToken(auth.get()).orElseThrow(() -> {
+            throw new AuthServiceException(ErrorType.TOKEN_NOT_CREATED);
+        });
     }
 
     public String actived(Long id,String activationCode) {

@@ -40,7 +40,7 @@ allprojects{
         implementation libs.openApi
         implementation libs.springBootValidation
        // implementation libs.springOpenFeign
-      //  implementation libs.javaJwt
+         implementation libs.javaJwt
         //    implementation libs.springCloudConfigServer
       //  implementation libs.springCloudConfigClient
         //      implementation libs.springCloudConfigStarter

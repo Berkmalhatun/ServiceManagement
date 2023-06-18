@@ -6,6 +6,7 @@ import com.sm.dto.response.RegisterResponseDto;
 import com.sm.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.sm.constants.ApiUrls.*;
@@ -16,6 +17,7 @@ import static com.sm.constants.ApiUrls.*;
 public class AuthController {
     private final AuthService authService;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(REGISTER)
         public ResponseEntity<RegisterResponseDto> register(@RequestBody RegisterRequestDto dto){
      return ResponseEntity.ok(authService.register(dto));

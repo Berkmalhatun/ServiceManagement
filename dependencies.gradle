@@ -5,6 +5,7 @@ ext{
             lombok                      : "1.18.26",
             openApi                     : "1.6.14",
             mapstruct                   : "1.5.3.Final",
+            jwt                         : "4.3.0"
     ]
     libs=[
             springBootWeb           : "org.springframework.boot:spring-boot-starter-web:$versions.springBoot",
@@ -21,5 +22,7 @@ ext{
             springCloudConfigStarter: "org.springframework.cloud:spring-cloud-starter-config:$versions.springCloud",
             springBootRabbitMQ       :  "org.springframework.boot:spring-boot-starter-amqp:$versions.springBoot",
             springBootMailSender     : "org.springframework.boot:spring-boot-starter-mail:$versions.springBoot",
+            springBootSecurity     : "org.springframework.boot:spring-boot-starter-security:$versions.springBoot",
+            javaJwt                 : "com.auth0:java-jwt:$versions.jwt",
     ]
 }

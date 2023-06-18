@@ -1,4 +1,4 @@
-package com.sm.config;
+package com.sm.config.rabbitmq;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
